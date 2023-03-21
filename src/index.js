@@ -2,10 +2,13 @@ const express = require('express')
 const socketio = require('socket.io')
 const http = require('http')
 const path = require('path')
+require('dotenv').config()
 const { generateMessage,generateLocationMessage } = require('./utils/messages')
 const { addUser,removeUser,getUser,getUsersInRoom } = require('./utils/users')
+// const url = require('url')
 
 const app = express()
+const authRouter = require('./routes/auth.routes.js')
 const server = http.createServer(app)
 const io = socketio(server)
 const port = 3000
@@ -13,6 +16,7 @@ const port = 3000
 const publicDirectoryPath = path.join(__dirname,'../public')
 
 app.use(express.static(publicDirectoryPath))
+app.use(authRouter)
 
 io.on('connection', (socket) => {
     console.log('New Connection!')
@@ -69,5 +73,24 @@ io.on('connection', (socket) => {
 })
 
 server.listen(port , ()=>{
-    console.log('Port is live on'+port)
+    console.log('Port is live on '+port)
 })
+
+// const queryParams = {
+//     client_id: process.env.GOOGLE_OAUTH_CLIENT_ID,
+//     redirect_uri: process.env.GOOGLE_OAUTH_REDIRECT_URI,
+//     scope: [
+//       'https://www.googleapis.com/auth/userinfo.email',
+//       'https://www.googleapis.com/auth/userinfo.profile',
+//     ].join(' '),
+//     response_type: 'code',
+//     access_type: 'offline',
+//     prompt: 'consent',
+// }
+
+// const urlString = url.format({
+//     pathname: 'https://accounts.google.com/o/oauth2/v2/auth',
+//     query: queryParams
+// })
+
+// console.log(urlString)
