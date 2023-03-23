@@ -1,9 +1,11 @@
 const {OAuth2Client} = require('google-auth-library');
 const url = require('url')
+const path = require('path')
 
 const clientId = process.env.GOOGLE_OAUTH_CLIENT_ID
 const clientSecret = process.env.GOOGLE_OAUTH_CLIENT_SECRET
 const redirectUri = process.env.GOOGLE_OAUTH_REDIRECT_URI
+const publicDirectoryPath = path.join(__dirname,'../../public')
 
 const client = new OAuth2Client(clientId,clientSecret,redirectUri);
 
@@ -22,6 +24,8 @@ async function googleAuth(req,res){
         });
         const { name, email } = ticket.getPayload()
         console.log(name,email)
+        // res.redirect(publicDirectoryPath)
+        // res.redirect('/')
         res.sendStatus(200)
     }
     catch(e){
