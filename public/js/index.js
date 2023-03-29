@@ -29,3 +29,9 @@ $sampleButton.addEventListener('click',(e)=>{
     // .then(response => response.json())
     // .catch(err=> console.log(err))
 })
+
+const isAuthorized=false
+
+// show profile dashboard icon and rooms list if true
+
+const rooms = ['dcbhew','dchbwhe','ehvbfh']

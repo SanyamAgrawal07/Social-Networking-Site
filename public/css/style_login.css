@@ -153,10 +153,14 @@ form .user-details .input-box{
 .topnav {
   display: flex;
     overflow: hidden;
+    justify-content: space-between;
+    padding-left: 4rem;
+    padding-right: 4rem;
   background-color: #e43737;
-  position: fixed; /* Set the navbar to fixed position */
+  position: absolute; 
   top: 0; /* Position the navbar at the top of the page */
-  /*width: 40%;  Full width */
+  left: 0;
+  width: 100%;
   }
   
   /* Style the links inside the navigation bar */

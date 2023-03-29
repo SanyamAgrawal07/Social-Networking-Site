@@ -1,41 +1,26 @@
 const express = require('express')
-
+// const graphql = require('graphql')
+// const {graphqlHTTP} = require('express-graphql')
+const { ApolloServer } = require('apollo-server-express')
 const socketio = require('socket.io')
 const http = require('http')
 const path = require('path')
 require('dotenv').config()
 const { generateMessage,generateLocationMessage } = require('./utils/messages')
 const { addUser,removeUser,getUser,getUsersInRoom } = require('./utils/users')
-// const url = require('url')
-// const { Neo4jGraphQL } = require("@neo4j/graphql");
-// const neo4j = require("neo4j-driver");
+const neoSchema = require('./neo4j/schema.js')
 
-// const typeDefs = gql`
-//     type Movie {
-//         title: String
-//         actors: [Actor!]! @relationship(type: "ACTED_IN", direction: IN)
-//     }
-
-//     type Actor {
-//         name: String
-//         movies: [Movie!]! @relationship(type: "ACTED_IN", direction: OUT)
-//     }
-// `;
-
-// const driver = neo4j.driver(
-//     process.env.NEO4J_URI,
-//     neo4j.auth.basic(process.env.NEO4J_USERNAME, process.env.NEO4J_PASSWORD)
-// );
-
-// const neoSchema = new Neo4jGraphQL({ typeDefs, driver })
-
-// const graphqlServer = new ApolloServer({
-//     schema: neoSchema.schema
-// }) 
-
-// graphqlServer.listen(({url})=>{
-//     console.log(`GraphQl server ready at ${url}`)
+// const QueryRoot = new graphql.GraphQLObjectType({
+//     name: 'Query',
+//     fields: () => ({
+//       hello: {
+//         type: graphql.GraphQLString,
+//         resolve: () => "Hello world!"
+//       }
+//     })
 // })
+
+// const schema = new graphql.GraphQLSchema({ query: QueryRoot });
 
 const app = express()
 const authRouter = require('./routes/auth.routes.js')
@@ -48,6 +33,10 @@ const publicDirectoryPath = path.join(__dirname,'../public')
 app.use(express.static(publicDirectoryPath))
 app.use(authRouter)
 
+// app.use('/api', graphqlHTTP({
+//     schema: schema,
+//     graphiql: true,
+// }));
 io.on('connection', (socket) => {
     console.log('New Connection!')
 
@@ -102,9 +91,51 @@ io.on('connection', (socket) => {
     })
 })
 
-server.listen(port , ()=>{
+// console.log(neoSchema)
+// neoSchema.getSchema((schema)=>{
+//     const graphqlServer = new ApolloServer({schema})
+//     graphqlServer.applyMiddleware({app})
+//     server.listen(port , ()=>{
+//         console.log('Port is live on '+port)
+//         console.log(`Server is live on ${port}${graphqlServer.graphqlPath}`)
+//     })
+// })
+let graphqlServer
+server.listen(port , async ()=>{
     console.log('Port is live on '+port)
+
+    const schema = await neoSchema.getSchema()
+    graphqlServer = new ApolloServer({schema})
+    await graphqlServer.start()
+    graphqlServer.applyMiddleware({app})
+    console.log(`Server is live on ${port}${graphqlServer.graphqlPath}`)
+    // .then((schema)=>{
+    //     graphqlServer = new ApolloServer({schema})
+    //     graphqlServer.applyMiddleware({app})
+    //     console.log(`Server is live on ${port}${graphqlServer.graphqlPath}`)
+    // })
 })
+
+// neoSchema.getSchema((schema)=>{
+//     const server = new ApolloServer({
+//         schema,
+//     })
+//     // app.use('/graphql', bodyParser.json(), graphqlExpress({
+//     //     schema,
+//     //     context: {},
+//     // }));
+      
+//     // app.use('/graphiql', graphiqlExpress({
+//     //     endpointURL: '/graphql'
+//     // }));
+// })
+
+
+
+// server.listen(port , ()=>{
+//     console.log('Port is live on '+port)
+//     console.log(`Server is live on ${port}${graphqlServer.graphqlPath}`)
+// })
 
 // const queryParams = {
 //     client_id: process.env.GOOGLE_OAUTH_CLIENT_ID,
