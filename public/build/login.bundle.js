@@ -15,7 +15,7 @@
   \****************************/
 /***/ (() => {
 
-eval("const $googleLogin = document.querySelector('#googlelogin')\r\n\r\n$googleLogin.addEventListener('click',(e)=>{\r\n    e.preventDefault()\r\n    console.log('clicked')\r\n    const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=828943984544-el49aitajaus8bn56nq8lr56pfb8gpnv.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fgoogle&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&response_type=code&access_type=offline&prompt=consent`;\r\n    window.location.href=googleLoginUrl\r\n})\n\n//# sourceURL=webpack://chat-app/./public/js/login.js?");
+eval("const $googleLogin = document.querySelector('#googlelogin')\n\n$googleLogin.addEventListener('click',(e)=>{\n    e.preventDefault()\n    console.log('clicked')\n    const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=828943984544-el49aitajaus8bn56nq8lr56pfb8gpnv.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fgoogle&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&response_type=code&access_type=offline&prompt=consent`;\n    window.location.href=googleLoginUrl\n})\n\n//# sourceURL=webpack://social-site/./public/js/login.js?");
 
 /***/ })
 

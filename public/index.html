@@ -18,31 +18,45 @@
             <a href="#news">News</a>
             <a href="#contact">Contact</a>
           </div>
-          <div class="right">
-            <a href="index1.html" class="split">Login</a>
-            <a href="register.html"  class="split">Register</a>
+          <div class="right" id="nav-right">
+            <a href="index1.html" class="split" >Login</a>
+            <a href="register.html"  class="split" >Register</a>
+            
+          </div>
+          <!-- <div id="placehere">
+          </div> -->
+        </div>
+        
+        <div id="card">
+          <div class="title">Join</div>
+          <div class="content">
+            <form action="/chat.html">
+              <div class="user-details">
+                <div class="input-box">
+                  <span class="details">Your Name</span>
+                  <input type="text" name="username" placeholder="Your Name" required>
+                </div>
+                <div class="input-box">
+                  <span class="details">Room Name</span>
+                  <input type="text" name="room" placeholder="Room Name" required>
+                </div>
+              </div>
+              <!-- </div> -->
+              <div class="button">
+                <input type="submit" value="Join">
+              </div>
+            </form>
           </div>
         </div>
-        <div class="title">Join</div>
-        <div class="content">
-          <form action="/chat.html">
-            <div class="user-details">
-              <div class="input-box">
-                <span class="details">Your Name</span>
-                <input type="text" name="username" placeholder="Your Name" required>
-              </div>
-              <div class="input-box">
-                <span class="details">Room Name</span>
-                <input type="text" name="room" placeholder="Room Name" required>
-              </div>
-            </div>
-            <!-- </div> -->
-            <div class="button">
-              <input type="submit" value="Join">
-            </div>
-          </form>
+        <div id="room-list">
         </div>
+        <ul id="myList">
+        </ul>
+        
+        
+        
       </div>
+      
       <script src="./build/index.bundle.js"></script>
 </body>
 </html>

@@ -35,6 +35,11 @@
     color: white;
   }
 
+   .card {
+    display: flex;
+    align-items: start;
+  } 
+
 
 
  
