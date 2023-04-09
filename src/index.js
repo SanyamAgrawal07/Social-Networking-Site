@@ -1,14 +1,17 @@
 const express = require('express')
 // const graphql = require('graphql')
 // const {graphqlHTTP} = require('express-graphql')
-const { ApolloServer } = require('apollo-server-express')
+// const { ApolloServer } = require('apollo-server-express')
 const socketio = require('socket.io')
 const http = require('http')
 const path = require('path')
+const cors = require('cors')
+const bodyParser = require('body-parser')
 require('dotenv').config()
 const { generateMessage,generateLocationMessage } = require('./utils/messages')
 const { addUser,removeUser,getUser,getUsersInRoom } = require('./utils/users')
-const neoSchema = require('./neo4j/schema.js')
+// const neoSchema = require('./neo4j/schema.js')
+const ogm = require('./neo4j/schema.js')
 
 // const QueryRoot = new graphql.GraphQLObjectType({
 //     name: 'Query',
@@ -24,6 +27,7 @@ const neoSchema = require('./neo4j/schema.js')
 
 const app = express()
 const authRouter = require('./routes/auth.routes.js')
+const userRouter = require('./routes/user.routes.js')
 const server = http.createServer(app)
 const io = socketio(server)
 const port = 3000
@@ -31,7 +35,10 @@ const port = 3000
 const publicDirectoryPath = path.join(__dirname,'../public')
 
 app.use(express.static(publicDirectoryPath))
+app.use(cors())
+app.use(bodyParser.json())
 app.use(authRouter)
+app.use(userRouter)
 
 // app.use('/api', graphqlHTTP({
 //     schema: schema,
@@ -100,20 +107,24 @@ io.on('connection', (socket) => {
 //         console.log(`Server is live on ${port}${graphqlServer.graphqlPath}`)
 //     })
 // })
-let graphqlServer
-server.listen(port , async ()=>{
-    console.log('Port is live on '+port)
+// let graphqlServer
 
-    const schema = await neoSchema.getSchema()
-    graphqlServer = new ApolloServer({schema})
-    await graphqlServer.start()
-    graphqlServer.applyMiddleware({app})
-    console.log(`Server is live on ${port}${graphqlServer.graphqlPath}`)
-    // .then((schema)=>{
-    //     graphqlServer = new ApolloServer({schema})
-    //     graphqlServer.applyMiddleware({app})
-    //     console.log(`Server is live on ${port}${graphqlServer.graphqlPath}`)
-    // })
+ogm.init()
+.then(()=>{
+    server.listen(port , ()=>{
+        console.log('Port is live on '+port)
+    
+        // const schema = await neoSchema.getSchema()
+        // graphqlServer = new ApolloServer({schema})
+        // await graphqlServer.start()
+        // graphqlServer.applyMiddleware({app})
+        // console.log(`Server is live on ${port}${graphqlServer.graphqlPath}`)
+        // .then((schema)=>{
+        //     graphqlServer = new ApolloServer({schema})
+        //     graphqlServer.applyMiddleware({app})
+        //     console.log(`Server is live on ${port}${graphqlServer.graphqlPath}`)
+        // })
+    })
 })
 
 // neoSchema.getSchema((schema)=>{

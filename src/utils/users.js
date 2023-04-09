@@ -1,3 +1,8 @@
+const ogm = require('../neo4j/schema.js')
+const User = ogm.model('User')
+const jwt = require('jsonwebtoken')
+const fs = require('fs')
+
 const users=[]
 
 function addUser({ username,room,id }){
@@ -34,9 +39,27 @@ function getUsersInRoom(room){
     return arr
 }
 
+function isIiitaUser(emailId){
+    if(emailId.endsWith('iiita.ac.in')) return true
+    return false
+}
+
+async function generateAuthToken(createdUser){
+    const token = jwt.sign({id: createdUser.id},process.env.JWT_SECRET,{expiresIn:'30m'})
+    await User.update({
+        where: { id:createdUser.id },
+        update: { token },
+    });
+    // return token
+    fs.writeFileSync('../../temp.txt', token)
+    // process.env.AUTH_TOKEN=token
+}
+
 module.exports = {
     addUser,
     removeUser,
     getUser,
-    getUsersInRoom
+    getUsersInRoom,
+    isIiitaUser,
+    generateAuthToken
 }
