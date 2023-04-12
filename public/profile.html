@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Boxicons CDN Link -->
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    article {
+      --img-scale: 1.001;
+      --title-color: black;
+      --link-icon-translate: -20px;
+      --link-icon-opacity: 0;
+      margin-top: 30%;
+      position: relative;
+      border-radius: 16px;
+      box-shadow: none;
+      background: #aed6e9;
+      transform-origin: center;
+      transition: all 0.4s ease-in-out;
+      overflow: hidden;
+    }
+
+    .logout-btn {
+      background-color: #eff2f3;
+      border: none;
+      color: #000000;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 8px 16px;
+    }
+
+    .logout-btn img {
+      margin-right: 18px;
+      width: 24px;
+      height: 24px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 100px;
+      background-color: #e43737;
+      /* background-image: linear-gradient(45deg, #9297e0, #ff73b3); */
+      /* background: linear-gradient(180deg, #04fafd, 5%, #119dff, 50%, #030423); */
+      color: #fff;
+      padding: 0 20px;
+    }
+
+    .logo img {
+      margin-top: 5%;
+      margin-left: 50%;
+      height: 500%;
+      width: 70%;
+    }
+
+    .title {
+      text-align: center;
+      flex-grow: 1;
+    }
+
+    article a::after {
+      position: absolute;
+      inset-block: 0;
+      inset-inline: 0;
+      cursor: pointer;
+      content: "";
+    }
+
+    /* basic article elements styling */
+    article h2 {
+      margin: 0 0 18px 0;
+      font-family: "Bebas Neue", cursive;
+      font-size: 1.9rem;
+      letter-spacing: 0.06em;
+      color: var(--title-color);
+      transition: color 0.3s ease-out;
+    }
+
+    figure {
+      margin: 0;
+      padding: 0;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+    }
+
+    article img {
+      max-width: 100%;
+      transform-origin: center;
+      transform: scale(var(--img-scale));
+      transition: transform 0.4s ease-in-out;
+    }
+
+    .article-body {
+      padding: 24px;
+    }
+
+    article a {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      color: #28666e;
+    }
+
+    article a:focus {
+      outline: 1px dotted #28666e;
+    }
+
+    article a .icon {
+      min-width: 24px;
+      width: 24px;
+      height: 24px;
+      margin-left: 5px;
+      transform: translateX(var(--link-icon-translate));
+      opacity: var(--link-icon-opacity);
+      transition: all 0.3s;
+    }
+
+    /* using the has() relational pseudo selector to update our custom properties */
+    article:has(:hover, :focus) {
+      --img-scale: 1.1;
+      --title-color: #28666e;
+      --link-icon-translate: 0;
+      --link-icon-opacity: 1;
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+        rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    }
+
+    /************************ 
+Generic layout (demo looks)
+**************************/
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      /* padding: 48px 0; */
+      font-family: "Figtree", sans-serif;
+      font-size: 1.2rem;
+      line-height: 1.6rem;
+      /* background-image: linear-gradient(45deg, #9297e0, #ff73b3); */
+      background: linear-gradient(135deg, #71b7e6, #9b59b6);
+      min-height: 100vh;
+    }
+
+    .articles {
+      display: grid;
+      max-width: 1200px;
+      margin-inline: auto;
+      padding-inline: 24px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+
+    .sr-only:not(:focus):not(:active) {
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap;
+      width: 1px;
+    }
+.container{
+  display: flex;
+  margin-left: 20rem;
+  margin-top: 15rem;
+  border: solid black 1px;
+  border-radius: 6px;
+  width: 50rem;
+  justify-content: space-around;
+  background-color: white;
+  height: 12rem;
+}
+.container .title{
+  font-size: 25px;
+  font-weight: 500;
+  position: relative;
+  margin-top: 8px;
+  
+}
+.container .title::before{
+  content: "";
+  position: relative;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 30px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #71b7e6, #9b59b6); 
+  
+}
+/* #card{
+  display:;
+  justify-content: space-around;
+} */
+#room-list{
+  display: inline-block;
+}
+.content form .user-details{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 20px 0 12px 0;
+}
+form .user-details .input-box{
+  margin-bottom: 15px;
+  width: calc(100% / 2 - 20px);
+}
+form .input-box span.details{
+  display: block;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.user-details .input-box input{
+  height: 45px;
+  width: 100%;
+  outline: none;
+  font-size: 16px;
+  border-radius: 5px;
+  padding-left: 15px;
+  border: 1px solid #ccc;
+  border-bottom-width: 2px;
+  transition: all 0.3s ease;
+}
+.user-details .input-box input:focus,
+.user-details .input-box input:valid{
+  border-color: #9b59b6;
+}
+ form .gender-details .gender-title{
+  font-size: 20px;
+  font-weight: 500;
+ }
+ form .category{
+   display: flex;
+   width: 80%;
+   margin: 14px 0 ;
+   justify-content: space-between;
+ }
+ form .category label{
+   display: flex;
+   align-items: center;
+   cursor: pointer;
+ }
+ form .category label .dot{
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  margin-right: 10px;
+  background: #d9d9d9;
+  border: 5px solid transparent;
+  transition: all 0.3s ease;
+}
+ #dot-1:checked ~ .category label .one,
+ #dot-2:checked ~ .category label .two,
+ #dot-3:checked ~ .category label .three{
+   background: #9b59b6;
+   border-color: #d9d9d9;
+ }
+ form input[type="radio"]{
+   display: none;
+ }
+ form .button{
+   height: 45px;
+   margin: 35px 0
+ }
+ form .button input{
+   height: 100%;
+   width: 100%;
+   border-radius: 5px;
+   border: none;
+   color: #fff;
+   font-size: 18px;
+   font-weight: 500;
+   letter-spacing: 1px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   background: linear-gradient(135deg, #71b7e6, #9b59b6);
+ }
+ form .button input:hover{
+  /* transform: scale(0.99); */
+  background: linear-gradient(-135deg, #71b7e6, #9b59b6);
+  }
+ @media(max-width: 584px){
+ .container{
+  max-width: 100%;
+}
+form .user-details .input-box{
+    margin-bottom: 15px;
+    width: 100%;
+  }
+  form .category{
+    width: 100%;
+  }
+  .content form .user-details{
+    max-height: 300px;
+    overflow-y: scroll;
+  }
+  .user-details::-webkit-scrollbar{
+    width: 5px;
+  }
+  }
+  @media(max-width: 459px){
+  .container .content .category{
+    flex-direction: column;
+  }
+}
+
+  </style>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 78px;
+      background: #07426c;
+      padding: 6px 14px;
+      z-index: 99;
+      transition: all 0.5s ease;
+    }
+
+    .sidebar.open {
+      width: 250px;
+    }
+
+    .sidebar .logo-details {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .sidebar .logo-details .icon {
+      opacity: 0;
+      transition: all 0.5s ease;
+    }
+
+    .sidebar .logo-details .logo_name {
+      color: #fff;
+      font-size: 20px;
+      font-weight: 600;
+      opacity: 0;
+      transition: all 0.5s ease;
+    }
+
+    .sidebar.open .logo-details .icon,
+    .sidebar.open .logo-details .logo_name {
+      opacity: 1;
+    }
+
+    .sidebar .logo-details #btn {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      font-size: 22px;
+      transition: all 0.4s ease;
+      font-size: 23px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.5s ease;
+    }
+
+    .sidebar.open .logo-details #btn {
+      text-align: right;
+    }
+
+    .sidebar i {
+      color: #fff;
+      height: 60px;
+      min-width: 50px;
+      font-size: 28px;
+      text-align: center;
+      line-height: 60px;
+    }
+
+    .sidebar .nav-list {
+      margin-top: 20px;
+      height: 100%;
+    }
+
+    .sidebar li {
+      position: relative;
+      margin: 8px 0;
+      list-style: none;
+    }
+
+    .sidebar li .tooltip {
+      position: absolute;
+      top: -20px;
+      left: calc(100% + 15px);
+      z-index: 3;
+      background: #0c5376;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 15px;
+      font-weight: 400;
+      opacity: 0;
+      white-space: nowrap;
+      pointer-events: none;
+      transition: 0s;
+    }
+
+    .sidebar li:hover .tooltip {
+      opacity: 1;
+      pointer-events: auto;
+      transition: all 0.4s ease;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .sidebar.open li .tooltip {
+      display: none;
+    }
+
+    .sidebar input {
+      font-size: 15px;
+      color: #FFF;
+      font-weight: 400;
+      outline: none;
+      height: 50px;
+      width: 100%;
+      width: 50px;
+      border: none;
+      border-radius: 12px;
+      transition: all 0.5s ease;
+      background: #1d1b31;
+    }
+
+    .sidebar.open input {
+      padding: 0 20px 0 50px;
+      width: 100%;
+    }
+
+    .sidebar .bx-search {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      font-size: 22px;
+      background: #1d1b31;
+      color: #FFF;
+    }
+
+    .sidebar.open .bx-search:hover {
+      background: #50b3fa;
+      color: #FFF;
+    }
+
+    .sidebar .bx-search:hover {
+      background: #FFF;
+      color: #11101d;
+    }
+
+    .sidebar li a {
+      display: flex;
+      height: 100%;
+      width: 100%;
+      border-radius: 12px;
+      align-items: center;
+      text-decoration: none;
+      transition: all 0.4s ease;
+      background: #06263e;
+    }
+
+    .sidebar li a:hover {
+      background: #FFF;
+    }
+
+    .sidebar li a .links_name {
+      color: #fff;
+      font-size: 15px;
+      font-weight: 400;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.4s;
+    }
+
+    .sidebar.open li a .links_name {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sidebar li a:hover .links_name,
+    .sidebar li a:hover i {
+      transition: all 0.5s ease;
+      color: #11101D;
+    }
+
+    .sidebar li i {
+      height: 50px;
+      line-height: 50px;
+      font-size: 18px;
+      border-radius: 12px;
+    }
+
+    .sidebar li.profile {
+      position: fixed;
+      height: 60px;
+      width: 78px;
+      left: 0;
+      bottom: -8px;
+      padding: 10px 14px;
+      background: #1d1b31;
+      transition: all 0.5s ease;
+      overflow: hidden;
+    }
+
+    .sidebar.open li.profile {
+      width: 250px;
+    }
+
+    .sidebar li .profile-details {
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+    }
+
+    .sidebar li img {
+      height: 45px;
+      width: 45px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-right: 10px;
+    }
+
+    .sidebar li.profile .name,
+    .sidebar li.profile .job {
+      font-size: 15px;
+      font-weight: 400;
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    .sidebar li.profile .job {
+      font-size: 12px;
+    }
+
+    .sidebar .profile #log_out {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      background: #1d1b31;
+      width: 100%;
+      height: 60px;
+      line-height: 60px;
+      border-radius: 0px;
+      transition: all 0.5s ease;
+    }
+
+    .sidebar.open .profile #log_out {
+      width: 50px;
+      background: none;
+    }
+
+    .home-section {
+      position: relative;
+      background: #E4E9F7;
+      min-height: 100vh;
+      top: 0;
+      left: 78px;
+      width: calc(100% - 78px);
+      transition: all 0.5s ease;
+      z-index: 2;
+    }
+
+    .sidebar.open~.home-section {
+      left: 250px;
+      width: calc(100% - 250px);
+    }
+
+    .home-section .text {
+      display: inline-block;
+      color: #11101d;
+      font-size: 25px;
+      font-weight: 500;
+      margin: 18px
+    }
+    .div1{
+      float:right;
+      align-items: center;
+      display: flex;
+    
+  /* margin-left: 20rem;
+  margin-top: 10rem; */
+ margin-top: 15rem;
+  margin-right: 20rem;
+  justify-content: center;
+  
+  height: 12rem;
+    }
+
+    @media (max-width: 420px) {
+      .sidebar li .tooltip {
+        display: none;
+      }
+    }
+  </style>
+  <title>Sample Articles</title>
+</head>
+
+
+
+<body>
+  <header>
+    <!-- <div class="logo">
+      <img src="https://cdn-icons-png.flaticon.com/128/893/893505.png" alt="your-logo">
+    </div> -->
+    <div class="title">
+      <h1>User Portfolio</h1>
+    </div>
+    
+    <div class="input-group">
+      
+      <div class="sidebar">
+        <div class="logo-details">
+          <i class='bx bx-book-bookmark icon'></i>
+          <div class="logo_name">Hello</div>
+          <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul class="nav-list">
+          <li>
+            <i class='bx bx-search'></i>
+            <form action="/search" method="post" id="search">
+              <input name="val" type="search" placeholder="Search...">
+            </form>
+            <span class="tooltip">Search</span>
+          </li>
+          <li>
+            <a href="/admin_home.ejs">
+              <i class='bx bx-grid-alt'></i>
+              <span class="links_name">My Profile</span>
+            </a>
+            <span class="tooltip">My Profile</span>
+          </li>
+          <li>
+            <a href="/change_password.ejs">
+              <i class='bx bx-user' ></i>
+              <span class="links_name">Change Password</span>
+            </a>
+            <span class="tooltip">Change Password</span>
+          </li>
+          <li>
+            <a href="/login_admin.ejs">
+              <i class='bx bx-log-out' ></i>
+              <span class="links_name">Log out</span>
+            </a>
+            <span class="tooltip">Log out</span>
+          </li>
+          <!-- <li class="profile">
+            <div class="profile-details">
+
+              <div class="name_job">
+                <div class="name">Student Portfolio</div>
+                <div class="job">Version 1.0</div>
+              </div>
+            </div>
+            <i class='bx bx-log-out' id="log_out"></i> 
+            <i class='bx bx-book-bookmark' id="log_out"></i>
+          </li> -->
+        </ul>
+        
+      </div>
+      <script>
+        let sidebar = document.querySelector(".sidebar");
+        let closeBtn = document.querySelector("#btn");
+        let searchBtn = document.querySelector(".bx-search");
+
+        closeBtn.addEventListener("click", () => {
+          sidebar.classList.toggle("open");
+          menuBtnChange();//calling the function(optional)
+        });
+        searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
+          sidebar.classList.toggle("open");
+          menuBtnChange(); //calling the function(optional)
+        });
+
+        // following are the code to change sidebar button(optional)
+        function menuBtnChange() {
+          if (sidebar.classList.contains("open")) {
+            closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+          } else {
+            closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");//replacing the iocns class
+          }
+        }
+      </script>
+
+
+      <!-- <button type="button" class="btn btn-outline-primary" id="search">search</button> -->
+    </div>
+  </header>
+
+  <!-- <section class="articles">
+      <article>
+        <div class="article-wrapper">
+          <figure>
+            <img src="chat (1).png" alt="" />
+          </figure>
+          <div class="article-body">
+            <h2>
+            </h2>
+            <p>
+              Enrollment Number :
+                <br>
+                Programme : 
+                  <br>
+                  Department : 
+                    <br>
+                    Semester : 
+            </p>
+          </div>
+        </div>
+      </article>
+  </section> -->
+</div>
+<div class="div1">
+  <form>
+    <div id="room-list">
+    </div>
+    <ul id="myList">
+  </form>
+</div>
+  <div class="container">
+    <div id="card">
+      <div class="title">Join</div>
+      <div class="content">
+        <form action="/chat.html">
+          <div class="user-details">
+            <div class="input-box">
+              <span class="details">Your Name</span>
+              <input type="text" name="username" placeholder="Your Name" required>
+            </div>
+            <div class="input-box">
+              <span class="details">Room Name</span>
+              <input type="text" name="room" placeholder="Room Name" required>
+            </div>
+          </div>
+           </div> 
+          <div class="button">
+            <input type="submit" value="Join">
+          </div>
+          
+          </ul>
+        </form>
+      </div>
+    </div>
+    
+   
+    
+    
+  
+  
+  <script src="./build/index.bundle.js"></script>
+
+</body>
+
+</html>
