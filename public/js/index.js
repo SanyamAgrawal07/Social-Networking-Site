@@ -30,33 +30,39 @@ const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=8
     // .catch(err=> console.log(err))
 })*/
 
-const isAuthorized=true;
-const rooms = ['dcbhew','dchbwhe','ehvbfh']
+const isAuthorized=false;
+const rooms = ['dcbhe','dchbwhe','ehvbfh']
 if(isAuthorized===true){
-    const element=document.getElementById("nav-right");
-    element.removeChild(element.firstElementChild);
-    element.removeChild(element.lastElementChild);
-    var elem = document.createElement("img");
-    elem.src='./img/user.png';
-    document.getElementById("nav-right").appendChild(elem);
-    document.getElementById("nav-right").style.paddingTop="5px";
-    document.getElementById("nav-right").lastElementChild.style.height="40px";
-    // function favTutorial() {  
-    //     var mylist = document.getElementById("myList");  
-    //     document.getElementById("favourite").value = mylist.options[mylist.selectedIndex].text;  
-    // }  
-    //document.getElementById("nav-right")..style.width="40px";
-    const para =document.createElement("p");
+    // const element=document.getElementById("nav-right");
+    // if (element.hasChildNodes()) {
+    //     element.removeChild(element.children[0]);
+    // }
+    // if (element.hasChildNodes()) {
+    //     element.removeChild(element.children[0]);
+    //   }
+    // // function favTutorial() {  
+    // //     var mylist = document.getElementById("myList");  
+    // //     document.getElementById("favourite").value = mylist.options[mylist.selectedIndex].text;  
+    // var elem = document.createElement("img");
+    // elem.src='./img/user.png';
+    // document.getElementById("nav-right").appendChild(elem);
+    // document.getElementById("nav-right").lastElementChild.style.paddingTop="20px";
+    // document.getElementById("nav-right").lastElementChild.style.height="40px";
+    // //document.getElementById("nav-right")..style.width="40px";
+    window.location.href="profile.html"; 
+}
+
+const para =document.createElement("p");
     para.innerHTML="Rooms you have already joined:";
     document.getElementById("room-list").appendChild(para);
+     // } 
     let list = document.getElementById("myList");
-    rooms.forEach((item)=>{
-        let li = document.createElement("li");
-        li.innerText = item;
-        list.appendChild(li);
-      
-    })
-}
+     rooms.forEach((item)=>{
+         let li = document.createElement("li");
+         li.innerText = item;
+         list.appendChild(li);
+       
+     })
 
 // show profile dashboard icon and rooms list if true
 
